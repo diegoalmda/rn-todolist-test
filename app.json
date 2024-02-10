@@ -1,10 +1,19 @@
 {
+  "name": "todo-list",
+  "displayName": "todo-list",
   "expo": {
     "name": "todo-list",
     "slug": "todo-list",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#F6F6FF"
+    },
+    "plugins": [
+      "expo-font"
     ]
   }
 }
