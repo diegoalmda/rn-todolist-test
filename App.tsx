@@ -1,8 +1,9 @@
-// React/React Native and expo imports
+// React/React Native imports
 import React, { useCallback } from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 // External libs imports
+import 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -11,6 +12,7 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 
 // Local imports
 import theme from './src/styles/theme';
+import { Routes } from './src/routes';
 
 SplashScreen.preventAutoHideAsync()
   .then((result) => {
@@ -36,19 +38,9 @@ export default function App(): React.JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <Text>Hello World!!!</Text>
-        <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
-      </View>
+      <View onLayout={onLayoutRootView} />
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      <Routes />
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1F4287',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
