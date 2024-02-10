@@ -20,6 +20,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "no-use-before-define": ["error", { "variables": false }],
     "react/prop-types": ["error", { "ignore": ["navigation", "navigation.navigate"] }],
-    "@typescript-eslint/strict-boolean-expressions": "warn"
+    "@typescript-eslint/strict-boolean-expressions": "warn",
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }
