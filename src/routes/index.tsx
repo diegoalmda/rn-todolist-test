@@ -21,8 +21,8 @@ export function Routes(): React.JSX.Element {
           gestureDirection: 'vertical',
         }}
       >
-        <Screen name="SignIn" component={SignIn} />
         <Screen name="Home" component={Home} />
+        <Screen name="SignIn" component={SignIn} />
       </Navigator>
     </NavigationContainer>
   );
