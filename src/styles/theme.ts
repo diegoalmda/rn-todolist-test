@@ -9,6 +9,7 @@ export default {
     title: '#F0F0F0',
     
     main: '#1F4287',
+    line: '#B5B5B5',
 
     warning_light: '#F96D6D',
     warning_dark: '#CC2937',
