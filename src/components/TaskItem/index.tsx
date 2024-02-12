@@ -8,12 +8,13 @@ import { Checkbox } from './Checkbox';
 
 // Styles imports
 import { InputCheckContainer, Container, InputText, TaskGestureHandlerContainer } from './styles';
+import { type Task } from '../../data/task';
 
-export function TaskItem(): React.JSX.Element {
+export function TaskItem(task: Task): React.JSX.Element {
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [taskTitle, setTaskTitle] = useState<string>('sdasd');
+  const [taskTitle, setTaskTitle] = useState<string>(task.title);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const [taskDone, setTaskDone] = useState<boolean>(false);
+  const [taskDone, setTaskDone] = useState<boolean>(task.done);
 
   const taskInput = useRef<TextInput>(null);
 

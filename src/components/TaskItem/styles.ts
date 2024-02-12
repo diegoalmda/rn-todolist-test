@@ -9,9 +9,6 @@ export const Container = styled.View`
   height: 52px;
   
   align-items: center;
-
-  margin-bottom: 8px;
-  margin-top: 8px;
 `;
 
 export const InputCheckContainer = styled.Pressable`
