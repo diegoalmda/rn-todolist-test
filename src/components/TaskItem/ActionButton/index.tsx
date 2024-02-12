@@ -19,7 +19,7 @@ export function ActionButton({ iconName, onPress, ...rest }: Props): React.JSX.E
   const setButtonColor = (name: string): string | undefined => {
     switch (name) {
       case 'edit':
-        return theme.colors.main;
+        return theme.colors.text_light;
       case 'confirm':
         return theme.colors.shape;
       case 'cancel':
