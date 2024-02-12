@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { Dimensions } from 'react-native';
 interface Props {
   finished?: boolean;
 }
@@ -90,6 +91,12 @@ export const TasksCount = styled.Text<Props>`
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.primary_700};
   color: ${({ theme, finished }) => finished ? theme.colors.background_details : theme.colors.main};
+`;
+
+export const TasksListContainer = styled.View`
+  height: ${Dimensions.get('window').height - 360}px;
+  padding-top: 16px;
+  padding-bottom: ${getBottomSpace() + 2}px;
 `;
 
 export const EmptyListContainer = styled.View`
