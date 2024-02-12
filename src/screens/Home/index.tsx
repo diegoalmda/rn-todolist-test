@@ -24,6 +24,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../styles/theme';
 import { NewTaskInput } from '../../components/NewTaskInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// import { TaskItem } from '../../components/TaskItem';
 
 export function Home(): React.JSX.Element {
   return (
@@ -78,6 +79,9 @@ export function Home(): React.JSX.Element {
               para cadastrar.
             </EmptyListSecondaryMessage>
           </EmptyListContainer>
+
+          {/* CODE: Create list to render task items */}
+          {/* <TaskItem /> */}
         </Body>
       </Container>
     </KeyboardAwareScrollView>
