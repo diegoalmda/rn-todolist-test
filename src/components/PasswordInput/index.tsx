@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 
 // External libs imports
 import { useTheme } from 'styled-components';
-import { GestureHandlerRootView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 // Styles imports
 import { Container, IconContainer, IconContainerRight, InputText } from './styles';
@@ -54,17 +54,15 @@ export function PasswordInput({ iconName, value, ...rest }: Props): React.JSX.El
         {...rest}
       />
 
-      <GestureHandlerRootView>
-        <TouchableWithoutFeedback onPress={handlePasswordVisibilityChange}>
-          <IconContainerRight isFocused={isFocused}>
-            <Feather
-              name={isPasswordVisible ? 'eye' : 'eye-off'}
-              size={24}
-              color={theme.colors.text}
-            />
-          </IconContainerRight>
-        </TouchableWithoutFeedback>
-      </GestureHandlerRootView>
+      <TouchableWithoutFeedback onPress={handlePasswordVisibilityChange}>
+        <IconContainerRight isFocused={isFocused}>
+          <Feather
+            name={isPasswordVisible ? 'eye' : 'eye-off'}
+            size={24}
+            color={theme.colors.text}
+          />
+        </IconContainerRight>
+      </TouchableWithoutFeedback>
     </Container>
   );
 }

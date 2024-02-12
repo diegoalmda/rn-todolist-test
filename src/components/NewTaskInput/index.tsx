@@ -8,7 +8,6 @@ import { useTheme } from 'styled-components';
 
 // Styles imports
 import { AddButton, Container, IconContainer, InputText } from './styles';
-import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 
 interface Props extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>['name'];
@@ -17,7 +16,7 @@ interface Props extends TextInputProps {
 
 export function NewTaskInput({ iconName, value, ...rest }: Props): React.JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  const [, setIsFilled] = useState(false);
 
   const theme = useTheme();
 
@@ -40,11 +39,9 @@ export function NewTaskInput({ iconName, value, ...rest }: Props): React.JSX.Ele
       />
 
       <IconContainer isFocused={isFocused}>
-        <GestureHandlerRootView>
-          <AddButton activeOpacity={0.5}>
-            <Feather name={iconName} size={24} color={theme.colors.main} />
-          </AddButton>
-        </GestureHandlerRootView>
+        <AddButton activeOpacity={0.5}>
+          <Feather name={iconName} size={24} color={theme.colors.main} />
+        </AddButton>
       </IconContainer>
     </Container>
   );
