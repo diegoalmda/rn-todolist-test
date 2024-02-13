@@ -10,12 +10,7 @@ import { useTheme } from 'styled-components';
 import { AddButton, Container, IconContainer, InputText } from './styles';
 import { useTaskContext } from '../../contexts/taskContext';
 
-interface Props extends TextInputProps {
-  iconName: React.ComponentProps<typeof Feather>['name'];
-  value?: string;
-}
-
-export function NewTaskInput({ ...rest }: Props): React.JSX.Element {
+export function NewTaskInput(): React.JSX.Element {
   const [isFocused, setIsFocused] = useState(false);
   const [, setIsFilled] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
@@ -31,11 +26,14 @@ export function NewTaskInput({ ...rest }: Props): React.JSX.Element {
   }
 
   function addTask(title: string): void {
-    // Alert.alert(title);
-    addNewTask(title);
-    newTaskInputRef.current?.blur();
-    Keyboard.dismiss();
-    setTaskTitle('');
+    if (title.trim().length > 0) {
+      addNewTask(title);
+      newTaskInputRef.current?.blur();
+      Keyboard.dismiss();
+      setTaskTitle('');
+    } else {
+      Alert.alert('Título inválido!', 'O título da tarefa precisa conter entre 1 e 50 caracteres.');
+    }
   }
 
   function handleInputBlur(): void {
@@ -49,10 +47,17 @@ export function NewTaskInput({ ...rest }: Props): React.JSX.Element {
         ref={newTaskInputRef}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        placeholder="Adicione uma tarefa"
+        keyboardType="default"
+        autoCorrect={false}
+        autoCapitalize="sentences"
         isFocused={isFocused}
         value={taskTitle}
+        maxLength={50}
         onChangeText={setTaskTitle}
-        {...rest}
+        onSubmitEditing={() => {
+          addTask(taskTitle);
+        }}
       />
 
       <IconContainer isFocused={isFocused}>
