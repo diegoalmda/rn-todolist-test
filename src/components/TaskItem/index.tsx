@@ -1,6 +1,6 @@
 // React/React Native and expo imports
 import React, { useState, useRef } from 'react';
-import { Keyboard, type TextInput } from 'react-native';
+import { Alert, Keyboard, type TextInput } from 'react-native';
 
 // Components imports
 import { ActionButton } from './ActionButton';
@@ -15,9 +15,8 @@ export function TaskItem(task: Task): React.JSX.Element {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [taskTitle, setTaskTitle] = useState<string>(task.title);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const [taskDone, setTaskDone] = useState<boolean>(task.done);
 
-  const { addNewTask, editTaskById, removeTaskById, tasks, toggleTaskDone } = useTaskContext();
+  const { editTaskTitle, removeTaskById, toggleTaskDone } = useTaskContext();
 
   const taskInput = useRef<TextInput>(null);
 
@@ -29,8 +28,8 @@ export function TaskItem(task: Task): React.JSX.Element {
     setIsFocused(false);
   }
 
-  function handleChangeTaskStatus(): void {
-    setTaskDone((prevState) => !prevState);
+  function handleChangeTaskStatus(id: Task['id']): void {
+    toggleTaskDone(id);
   }
 
   function handleTaskTitleChange(title: string): void {
@@ -42,7 +41,6 @@ export function TaskItem(task: Task): React.JSX.Element {
   }
 
   function handleStartEditingTask(): void {
-    // const currentTitle = taskTitle;
     taskInput.current?.focus();
     handleInputFocus();
     setSelection({ start: taskTitle.length, end: taskTitle.length });
@@ -52,38 +50,54 @@ export function TaskItem(task: Task): React.JSX.Element {
     taskInput.current?.blur();
     handleInputBlur();
     Keyboard.dismiss();
-    // CODE: create change task title
+
+    if (taskTitle.trim().length > 0) {
+      const newTask = {
+        ...task,
+        title: taskTitle,
+      };
+      editTaskTitle(newTask);
+    } else {
+      setTaskTitle(task.title);
+      Alert.alert('Título inválido!', 'O título da tarefa precisa conter entre 1 e 50 caracteres.');
+    }
   }
 
   function handleCancelEditingTask(): void {
-    // const currentTitle = taskTitle;
     taskInput.current?.blur();
     handleInputBlur();
     Keyboard.dismiss();
+    setTaskTitle(task.title);
   }
 
   return (
     <Container>
-      <InputCheckContainer onPress={handleChangeTaskStatus}>
+      <InputCheckContainer
+        onPress={() => {
+          handleChangeTaskStatus(task.id);
+        }}
+      >
         <TaskGestureHandlerContainer pointerEvents={isFocused ? 'auto' : 'none'}>
-          {!isFocused && <Checkbox checked={taskDone} />}
+          {!isFocused && <Checkbox checked={task.done} />}
           <InputText
             ref={taskInput}
             multiline={false}
             numberOfLine={1}
             horizontal={true}
             scrollEnabled={false}
-            // editable={isFocused}
-            maxLength={30}
+            maxLength={50}
             onChangeText={handleTaskTitleChange}
             value={taskTitle}
             selection={selection}
             onSelectionChange={({ nativeEvent: { selection } }) => {
               setSelection(selection);
             }}
-            textDecorationLine={taskDone && !isFocused ? 'line-through' : 'regular-line-through'}
-            checked={taskDone}
+            textDecorationLine={task.done && !isFocused ? 'line-through' : 'regular-line-through'}
+            checked={task.done}
             isFocused={isFocused}
+            onSubmitEditing={() => {
+              handleEndEditingTask();
+            }}
           />
         </TaskGestureHandlerContainer>
       </InputCheckContainer>
@@ -100,7 +114,12 @@ export function TaskItem(task: Task): React.JSX.Element {
         </>
       ) : (
         <>
-          <ActionButton iconName="confirm" onPress={handleEndEditingTask} />
+          <ActionButton
+            iconName="confirm"
+            onPress={() => {
+              handleEndEditingTask();
+            }}
+          />
           <ActionButton iconName="cancel" onPress={handleCancelEditingTask} />
         </>
       )}
