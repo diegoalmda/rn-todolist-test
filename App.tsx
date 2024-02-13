@@ -13,6 +13,7 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 import theme from './src/styles/theme';
 import { Routes } from './src/routes';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import GlobalContextProvider from './src/contexts';
 
 SplashScreen.preventAutoHideAsync()
   .then((result) => {
@@ -38,11 +39,13 @@ export default function App(): React.JSX.Element {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider theme={theme}>
-        <View onLayout={onLayoutRootView} />
-        <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
-        <Routes />
-      </ThemeProvider>
+      <GlobalContextProvider>
+        <ThemeProvider theme={theme}>
+          <View onLayout={onLayoutRootView} />
+          <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+          <Routes />
+        </ThemeProvider>
+      </GlobalContextProvider>
     </GestureHandlerRootView>
   );
 }
