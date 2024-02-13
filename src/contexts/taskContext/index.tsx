@@ -21,7 +21,7 @@ interface ITaskContextData {
   isLoadingTasks: boolean;
   addNewTask: (taskTitle: Task['title']) => void;
   toggleTaskDone: (taskId: Task['id']) => void;
-  editTaskById: (taskId: Task['id']) => void;
+  editTaskTitle: (taskd: Task) => void;
   removeTaskById: (taskId: Task['id']) => void;
 }
 
@@ -47,11 +47,13 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
   }
 
   function toggleTaskDone(taskId: Task['id']): void {
+    // console.log('Before Dispatch:', taskId);
     dispatch(checkTaskAsDone(taskId));
+    // console.log('After Dispatch:', taskId);
   }
 
-  function editTaskById(taskId: Task['id']): void {
-    dispatch(editTask(taskId));
+  function editTaskTitle(task: Task): void {
+    dispatch(editTask(task));
   }
 
   function removeTaskById(taskId: Task['id']): void {
@@ -94,7 +96,7 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
         tasks: taskState,
         addNewTask,
         toggleTaskDone,
-        editTaskById,
+        editTaskTitle,
         removeTaskById,
         isLoadingTasks,
       }}

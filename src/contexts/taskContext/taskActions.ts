@@ -3,30 +3,30 @@ import { ADD_TASK, EDIT_TASK, REMOVE_TASK, CHECK_TASK_AS_DONE, LOAD_STORAGE_TASK
 
 interface TaskParam {
   type: string;
-  payload: string | Task;
+  payload: string | Task | Task[];
 }
 
-export const addTask = (task): TaskParam => ({
+export const addTask = (task: Task): TaskParam => ({
   type: ADD_TASK,
   payload: task,
 });
 
-export const editTask = (task): TaskParam => ({
+export const editTask = (task: Task): TaskParam => ({
   type: EDIT_TASK,
   payload: task,
 });
 
-export const loadTasks = (tasks): TaskParam => ({
+export const loadTasks = (tasks: Task[]): TaskParam => ({
   type: LOAD_STORAGE_TASKS,
   payload: tasks,
 });
 
-export const removeTask = (taskId): TaskParam => ({
+export const removeTask = (taskId: string): TaskParam => ({
   type: REMOVE_TASK,
   payload: taskId,
 });
 
-export const checkTaskAsDone = (taskId): TaskParam => ({
+export const checkTaskAsDone = (taskId: string): TaskParam => ({
   type: CHECK_TASK_AS_DONE,
   payload: taskId,
 });
