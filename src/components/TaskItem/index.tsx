@@ -8,13 +8,16 @@ import { Checkbox } from './Checkbox';
 
 // Styles imports
 import { InputCheckContainer, Container, InputText, TaskGestureHandlerContainer } from './styles';
-import { type Task } from '../../data/task';
+import { type Task } from '../../contexts/taskContext/taskType';
+import { useTaskContext } from '../../contexts/taskContext';
 
 export function TaskItem(task: Task): React.JSX.Element {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [taskTitle, setTaskTitle] = useState<string>(task.title);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
   const [taskDone, setTaskDone] = useState<boolean>(task.done);
+
+  const { addNewTask, editTaskById, removeTaskById, tasks, toggleTaskDone } = useTaskContext();
 
   const taskInput = useRef<TextInput>(null);
 
@@ -32,6 +35,10 @@ export function TaskItem(task: Task): React.JSX.Element {
 
   function handleTaskTitleChange(title: string): void {
     setTaskTitle(title);
+  }
+
+  function removeTask(id: Task['id']): void {
+    removeTaskById(id);
   }
 
   function handleStartEditingTask(): void {
@@ -67,7 +74,7 @@ export function TaskItem(task: Task): React.JSX.Element {
             horizontal={true}
             scrollEnabled={false}
             // editable={isFocused}
-            maxLength={25}
+            maxLength={30}
             onChangeText={handleTaskTitleChange}
             value={taskTitle}
             selection={selection}
@@ -76,6 +83,7 @@ export function TaskItem(task: Task): React.JSX.Element {
             }}
             textDecorationLine={taskDone && !isFocused ? 'line-through' : 'regular-line-through'}
             checked={taskDone}
+            isFocused={isFocused}
           />
         </TaskGestureHandlerContainer>
       </InputCheckContainer>
@@ -83,7 +91,12 @@ export function TaskItem(task: Task): React.JSX.Element {
       {!isFocused ? (
         <>
           <ActionButton iconName="edit" onPress={handleStartEditingTask} />
-          <ActionButton iconName="delete" />
+          <ActionButton
+            iconName="delete"
+            onPress={() => {
+              removeTask(task.id);
+            }}
+          />
         </>
       ) : (
         <>
