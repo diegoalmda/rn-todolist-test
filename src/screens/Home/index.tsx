@@ -26,10 +26,13 @@ import theme from '../../styles/theme';
 import { NewTaskInput } from '../../components/NewTaskInput';
 import { TaskItem } from '../../components/TaskItem';
 
-import { type Task, tasks } from '../../data/task';
+import { type Task } from '../../contexts/taskContext/taskType';
 import { FlatList, type ListRenderItemInfo } from 'react-native';
 
+import { useTaskContext } from '../../contexts/taskContext';
+
 export function Home(): React.JSX.Element {
+  const { tasks } = useTaskContext();
   function renderTasks({ item }: ListRenderItemInfo<Task>): ReactNode {
     return <TaskItem {...item} />;
   }
