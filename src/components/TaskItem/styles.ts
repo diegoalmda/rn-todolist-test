@@ -44,8 +44,8 @@ export const InputText = styled.TextInput.attrs({
   border-bottom-width: 1px;
   border-bottom-color: transparent;
 
-  padding-right: 20px;
   margin-left: 6px;
+  margin-right: 12px;
 
   ${({ isFocused, theme }) => isFocused && css`
     border-bottom-width: 1px;
