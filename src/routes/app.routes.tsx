@@ -2,7 +2,6 @@
 import React from 'react';
 
 // Navigation libs imports
-// import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens components imports
