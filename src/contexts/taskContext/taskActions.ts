@@ -1,5 +1,5 @@
 import { type Task } from 'react-native';
-import { ADD_TASK, EDIT_TASK, REMOVE_TASK, CHECK_TASK_AS_DONE, LOAD_STORAGE_TASKS } from './taskActionTypes';
+import { ADD_TASK, REMOVE_TASK, CHECK_TASK_AS_DONE, LOAD_STORAGE_TASKS } from './taskActionTypes';
 
 interface TaskParam {
   type: string;
@@ -8,11 +8,6 @@ interface TaskParam {
 
 export const addTask = (task: Task): TaskParam => ({
   type: ADD_TASK,
-  payload: task,
-});
-
-export const editTask = (task: Task): TaskParam => ({
-  type: EDIT_TASK,
   payload: task,
 });
 

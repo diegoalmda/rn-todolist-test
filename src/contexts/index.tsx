@@ -6,11 +6,7 @@ interface GlobalContextProviderProps {
 }
 
 const GlobalContextProvider = ({ children }: GlobalContextProviderProps): React.JSX.Element => {
-  return (
-    // <AuthProvider>
-    <TaskProvider>{children}</TaskProvider>
-    // </AuthProvider>
-  );
+  return <TaskProvider>{children}</TaskProvider>;
 };
 
 export default GlobalContextProvider;
