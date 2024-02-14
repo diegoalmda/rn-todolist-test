@@ -10,17 +10,16 @@ import auth, { type FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { useTaskContext } from "../contexts/taskContext";
 
 export function Routes() {
-  const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   
-  const { setUserIdCode } = useTaskContext();
+  const { setStorageKey } = useTaskContext();
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(_user => {
       setUser(_user);
-      setUserIdCode(_user?.uid);
-      if (initializing) setInitializing(false);
-    })
+      setStorageKey(_user?.uid);
+    });
+
     return unsubscribe;
   }, []);
 
