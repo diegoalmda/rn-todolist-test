@@ -10,7 +10,9 @@ export const Container = styled.View`
 `;
 
 export const MainContent = styled.View`
-  margin-top: auto;
+  /* margin-top: auto; */
+  flex: 1;
+  justify-content: center;
 `;
 
 export const Header = styled.View`
@@ -54,7 +56,7 @@ export const ErrorMessageContainer = styled.View`
 `;
 
 export const ErrorMessage = styled.Text`
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   color: ${({ theme }) => theme.colors.warning_light};
 `;
 

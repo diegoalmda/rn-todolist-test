@@ -26,6 +26,8 @@ import theme from '../../styles/theme';
 import { NewTaskInput } from '../../components/NewTaskInput';
 import { TaskItem } from '../../components/TaskItem';
 
+import auth from '@react-native-firebase/auth';
+
 import { type Task } from '../../contexts/taskContext/taskType';
 import {
   FlatList,
@@ -67,6 +69,10 @@ export function Home(): React.JSX.Element {
     }).start();
   };
 
+  function signOut() {
+    auth().signOut();
+  }
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', handleKeyboardDidShow);
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', handleKeyboardDidHide);
@@ -82,11 +88,11 @@ export function Home(): React.JSX.Element {
     //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     //   keyboardVerticalOffset={20}
     //   style={{ flex: 1 }}
-    // >
+    // ></KeyboardAvoidingView>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <Header>
-          <LogoutButtonContainer>
+          <LogoutButtonContainer onPress={signOut}>
             <MaterialCommunityIcons name="logout" size={RFValue(28)} color={theme.colors.shape} />
           </LogoutButtonContainer>
           <AppHeroContainer>
