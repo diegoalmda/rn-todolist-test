@@ -34,11 +34,7 @@ export function Button({
       enabled={enabled}
       style={{ opacity: !enabled || loading ? 0.5 : 1 }}
     >
-      {loading ? (
-        <ActivityIndicator color={theme.colors.background_details} />
-      ) : (
-        <Title removeType={removeType}>{title}</Title>
-      )}
+      <Title removeType={removeType}>{title}</Title>     
     </Container>
   );
 }
