@@ -46,7 +46,7 @@ import {
 } from './styles';
 
 export function Home(): React.JSX.Element {
-  const { tasks } = useTaskContext();
+  const { tasks, setStorageKey } = useTaskContext();
 
   function renderTasks({ item }): React.JSX.Element {
     return <TaskItem {...item} />;
@@ -58,6 +58,7 @@ export function Home(): React.JSX.Element {
 
   async function signOut(): Promise<void> {
     try {
+      setStorageKey('');
       await auth().signOut();
     } catch (error) {
       console.error(error);
