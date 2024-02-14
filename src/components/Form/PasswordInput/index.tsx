@@ -11,11 +11,11 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Container, IconContainer, IconContainerRight, InputText } from './styles';
 
 interface Props extends TextInputProps {
-  iconName: React.ComponentProps<typeof Feather>['name'];
+  // iconName: React.ComponentProps<typeof Feather>['name'];
   value?: string;
 }
 
-export function PasswordInput({ iconName, value, ...rest }: Props): React.JSX.Element {
+export function PasswordInput({ value, ...rest }: Props): React.JSX.Element {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -39,7 +39,7 @@ export function PasswordInput({ iconName, value, ...rest }: Props): React.JSX.El
     <Container>
       <IconContainer isFocused={isFocused}>
         <Feather
-          name={iconName}
+          name={'lock'}
           size={24}
           color={isFocused || isFilled ? theme.colors.main : theme.colors.text_light}
         />

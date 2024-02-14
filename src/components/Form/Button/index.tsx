@@ -28,6 +28,7 @@ export function Button({
 
   return (
     <Container
+      activeOpacity={0.7}
       color={color ?? theme.colors.shape_dark}
       onPress={onPress}
       enabled={enabled}

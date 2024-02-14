@@ -1,6 +1,7 @@
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import theme from '../../../styles/theme';
 
 interface ButtonProps {
     color?: string;
