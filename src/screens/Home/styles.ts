@@ -1,4 +1,7 @@
-import styled, { css } from 'styled-components/native';
+// Imports for layout
+import styled from 'styled-components/native';
+
+// Imports for responsive design adjustments
 import { RFValue } from 'react-native-responsive-fontsize';
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Dimensions } from 'react-native';
