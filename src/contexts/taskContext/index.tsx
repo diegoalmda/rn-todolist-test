@@ -23,9 +23,10 @@ interface ITaskContextData {
   toggleTaskDone: (taskId: Task['id']) => void;
   editTaskTitle: (taskd: Task) => void;
   removeTaskById: (taskId: Task['id']) => void;
+  setStorageKey: (id: string) => void;
 }
 
-const tasksStorageKey = '@todolist-test-1.0.0:tasks';
+// const tasksStorageKey = '@todolist-test-1.0.0:tasks';
 
 const TaskContext = createContext({} as ITaskContextData);
 
@@ -33,6 +34,8 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
   // const tasks = await AsyncStorage.getItem(tasksStorageKey);
   const [taskState, dispatch] = useReducer(taskReducer, []);
   const [isLoadingTasks, setIsLoadingTasks] = useState<boolean>(true);
+  // const [userId, setUserId] = useState<string>('');
+  const [userStorageKey, setUserStorageKey] = useState<string>('');
 
   async function addNewTask(taskTitle: Task['title']): Promise<void> {
     const timestamp = Date.now().toString(16);
@@ -42,14 +45,13 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
       id: randomId,
       title: taskTitle,
       done: false,
+      user: userStorageKey
     };
     dispatch(addTask(newTask));
   }
 
   function toggleTaskDone(taskId: Task['id']): void {
-    // console.log('Before Dispatch:', taskId);
     dispatch(checkTaskAsDone(taskId));
-    // console.log('After Dispatch:', taskId);
   }
 
   function editTaskTitle(task: Task): void {
@@ -59,14 +61,25 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
   function removeTaskById(taskId: Task['id']): void {
     dispatch(removeTask(taskId));
   }
+  
+  function setStorageKey(userUid: string): void {
+    setUserStorageKey(`@todolist-test-1.0.0:${userUid}`);
+  }
 
   useEffect(() => {
     async function loadTasksData(): Promise<void> {
-      const tasksStored = await AsyncStorage.getItem(tasksStorageKey);
+      const tasksStored = await AsyncStorage.getItem(userStorageKey);
 
       if (tasksStored) {
         const tasksFound = JSON.parse(tasksStored) as Task[];
-        dispatch(loadTasks(tasksFound));
+
+        console.log('Tasks encontradas:', tasksFound);
+
+      const tasksByUser = tasksFound.filter(task => task.user === userStorageKey);
+
+      console.log('Tasks filtradas pelo usuário:', tasksByUser);
+
+        dispatch(loadTasks(tasksByUser));
       }
       setIsLoadingTasks(false);
     }
@@ -76,11 +89,11 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [userStorageKey]);
 
   useEffect(() => {
     async function updateTasksInStorage(): Promise<void> {
-      await AsyncStorage.setItem(tasksStorageKey, JSON.stringify(taskState));
+      await AsyncStorage.setItem(userStorageKey, JSON.stringify(taskState));
     }
 
     try {
@@ -88,6 +101,9 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
     } catch (err) {
       console.log(err);
     }
+
+    // console.log(userStorageKey);
+    // console.log(JSON.stringify(taskState, null, 2));
   }, [taskState]);
 
   return (
@@ -99,6 +115,7 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
         editTaskTitle,
         removeTaskById,
         isLoadingTasks,
+        setStorageKey,
       }}
     >
       {children}
