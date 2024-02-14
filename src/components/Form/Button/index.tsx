@@ -1,6 +1,5 @@
 // React/React Native imports
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
 
 // External libs imports
 import { useTheme } from 'styled-components';
@@ -34,7 +33,7 @@ export function Button({
       enabled={enabled}
       style={{ opacity: !enabled || loading ? 0.5 : 1 }}
     >
-      <Title removeType={removeType}>{title}</Title>     
+      <Title removeType={removeType}>{title}</Title>
     </Container>
   );
 }

@@ -11,7 +11,6 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Container, IconContainer, IconContainerRight, InputText } from './styles';
 
 interface Props extends TextInputProps {
-  // iconName: React.ComponentProps<typeof Feather>['name'];
   value?: string;
 }
 
@@ -50,7 +49,6 @@ export function PasswordInput({ value, ...rest }: Props): React.JSX.Element {
         onBlur={handleInputBlur}
         secureTextEntry={isPasswordVisible}
         isFocused={isFocused}
-        autoCorrect={false}
         {...rest}
       />
 
