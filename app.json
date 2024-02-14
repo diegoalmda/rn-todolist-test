@@ -3,13 +3,20 @@
   "displayName": "todo-list",
   "expo": {
     "name": "todo-list",
+    "icon": "./assets/logo.png",
     "slug": "todo-list",
+    "scheme": "todo-list",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.todolist",
+      "versionCode": 1
+    },
     "splash": {
       "image": "./assets/splash.png",
+      "resizeMode": "contain",
       "backgroundColor": "#1F4287"
     },
     "plugins": [
