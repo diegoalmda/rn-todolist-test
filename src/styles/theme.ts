@@ -2,6 +2,7 @@ export default {
   colors: {
     background_primary: '#F6F6FF',
     background_details: '#FFFFFF',
+    background_input: '#E8E8E8',
     
     text: '#071E3D', 
     text_light: '#2769A5',
