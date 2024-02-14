@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import { StatusBar, View } from 'react-native';
 
 // External libs imports
-import { ThemeProvider } from 'styled-components';
 import * as SplashScreen from 'expo-splash-screen';
 
 // Fonts imports
@@ -12,12 +11,16 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 // Local imports
 import theme from './src/styles/theme';
 import { Routes } from './src/routes';
+
+// Providers imports
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import GlobalContextProvider from './src/contexts';
+import { ThemeProvider } from 'styled-components';
 
+// Prevent to hide splash screen till fonts are loaded
 SplashScreen.preventAutoHideAsync()
   .then((result) => {
-    console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`);
+    // console.log(`SplashScreen.preventAutoHideAsync() succeeded: ${result}`);
   })
   .catch(console.warn);
 
