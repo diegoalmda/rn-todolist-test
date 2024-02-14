@@ -98,7 +98,7 @@ export function SignIn(): React.JSX.Element {
         })
         .catch((error) => {
           console.log(error);
-          if (error.code === 'auth/wrong-password') {
+          if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
             setFormError('Usuário não encontrado');
           }
         })
@@ -117,7 +117,7 @@ export function SignIn(): React.JSX.Element {
         .createUserWithEmailAndPassword(email, password)
         .then((userRecord) => {
           console.log(userRecord.user.uid);
-          Alert.alert('Conta', 'Cadastrado com sucesso!');
+          // Alert.alert('Conta', 'Cadastrado com sucesso!');
         })
         .catch((error) => {
           console.log(error);
