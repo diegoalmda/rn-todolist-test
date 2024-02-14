@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
   padding: 0 24px;
@@ -10,7 +9,6 @@ export const Container = styled.View`
 `;
 
 export const MainContent = styled.View`
-  /* margin-top: auto; */
   flex: 1;
   justify-content: center;
 `;
@@ -45,7 +43,7 @@ export const SubTitle = styled.Text`
 
 export const Form = styled.View`
   width: 100%;
-  margin-top: 64px;
+  margin-top: 46px;
   gap: 4px;
 `;
 
@@ -61,8 +59,3 @@ export const ErrorMessage = styled.Text`
 `;
 
 export const FormButtonContainer = styled.View``;
-
-export const DeleteAccountButtonContainer = styled.View`
-  margin-top: auto;
-  margin-bottom: ${getBottomSpace() + 60}px;
-`;
