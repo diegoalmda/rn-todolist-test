@@ -1,29 +1,26 @@
 // React/React Native and expo imports
 import React, { useRef, useState } from 'react';
-import { Alert, Keyboard, type TextInput, type TextInputProps } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Alert, Keyboard, type TextInput } from 'react-native';
 
 // External libs imports
 import { useTheme } from 'styled-components';
 
-// Styles imports
-import { AddButton, Container, IconContainer, InputText } from './styles';
+// Icons imports
+import { Feather } from '@expo/vector-icons';
+
+// Local imports
 import { useTaskContext } from '../../contexts/taskContext';
 
-export function NewTaskInput(): React.JSX.Element {
-  const [isFocused, setIsFocused] = useState(false);
-  const [, setIsFilled] = useState(false);
-  const [taskTitle, setTaskTitle] = useState('');
+// Styles imports
+import { AddButton, Container, IconContainer, InputText } from './styles';
 
+export function NewTaskInput(): React.JSX.Element {
+  const [taskTitle, setTaskTitle] = useState('');
   const newTaskInputRef = useRef<TextInput>(null);
 
   const { addNewTask } = useTaskContext();
 
   const theme = useTheme();
-
-  function handleInputFocus(): void {
-    setIsFocused(true);
-  }
 
   function addTask(title: string): void {
     if (title.trim().length > 0) {
@@ -36,22 +33,14 @@ export function NewTaskInput(): React.JSX.Element {
     }
   }
 
-  function handleInputBlur(): void {
-    setIsFocused(false);
-    setIsFilled(!!taskTitle);
-  }
-
   return (
     <Container>
       <InputText
         ref={newTaskInputRef}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
         placeholder="Adicione uma tarefa"
         keyboardType="default"
         autoCorrect={false}
         autoCapitalize="sentences"
-        isFocused={isFocused}
         value={taskTitle}
         maxLength={50}
         onChangeText={setTaskTitle}
@@ -60,14 +49,14 @@ export function NewTaskInput(): React.JSX.Element {
         }}
       />
 
-      <IconContainer isFocused={isFocused}>
+      <IconContainer>
         <AddButton
           activeOpacity={0.5}
           onPress={() => {
             addTask(taskTitle);
           }}
         >
-          <Feather name="plus" size={24} color={theme.colors.main} />
+          <Feather name="plus" size={28} color={theme.colors.main} />
         </AddButton>
       </IconContainer>
     </Container>

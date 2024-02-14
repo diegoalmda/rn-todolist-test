@@ -1,44 +1,35 @@
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-
 import theme from '../../styles/theme';
-
-interface Props {
-  isFocused: boolean;
-}
 
 export const Container = styled.View`
   flex-direction: row;
-
   margin-bottom: 8px;
 `;
 
-export const IconContainer = styled.View<Props>`
+export const IconContainer = styled.View`
   height: 56px;
   width: 55px;
   justify-content: center;
   align-items: center;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-
   
   border-width: 2px;
   border-left-width: 0;
   border-color: ${({ theme }) => theme.colors.main};
 
   background-color: ${({ theme }) => theme.colors.background_details};
-
-  /* ${({ isFocused, theme }) => isFocused && css`
-    border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.shape};
-  `}; */
 `;
 
-export const AddButton = styled.TouchableOpacity<Props>`
-  height: 50px;
-  width: 50px;
+export const AddButton = styled.TouchableOpacity`
+  height: 36px;
+  width: 36px;
   justify-content: center;
   align-items: center;
+  border-width: 2px;
+  border-radius: 6px;
+  border-color: ${({ theme }) => theme.colors.main};
 `;
 
 export const InputText = styled.TextInput.attrs({
@@ -59,9 +50,4 @@ export const InputText = styled.TextInput.attrs({
   border-color: ${({ theme }) => theme.colors.main};
 
   padding-left: 23px;
-
-  /* ${({ isFocused, theme }) => isFocused && css`
-    border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.shape};
-  `}; */
 `;
