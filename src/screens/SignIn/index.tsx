@@ -1,14 +1,29 @@
-import React, { useEffect, useState } from 'react';
+// React/React native imports
+import React, { useState } from 'react';
+import { ActivityIndicator, Keyboard } from 'react-native';
 
+// External libs imports for layout and responsive design
 import { useTheme } from 'styled-components';
+import { RFValue } from 'react-native-responsive-fontsize';
 
+// External libs imports for validation
 import { ZodError, z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
+// External libs imports for user interaction
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+// External libs imports for authentication
+import auth from '@react-native-firebase/auth';
+
+// Images imports
 import Logo from '../../assets/logo.svg';
 
+// Local components imports
+import { Button } from '../../components/Form/Button';
+import { Input } from '../../components/Form/Input';
+import { PasswordInput } from '../../components/Form/PasswordInput';
+
+// Styles imports
 import {
   Container,
   Header,
@@ -19,18 +34,14 @@ import {
   ErrorMessageContainer,
   ErrorMessage,
   FormButtonContainer,
-  DeleteAccountButtonContainer,
   MainContent,
 } from './styles';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useForm, type SubmitHandler, Controller } from 'react-hook-form';
-import { Button } from '../../components/Form/Button';
-import { Input } from '../../components/Form/Input';
-import { PasswordInput } from '../../components/Form/PasswordInput';
-import { ActivityIndicator, Alert, Keyboard } from 'react-native';
+interface ValidateUserProps {
+  isValid: boolean;
+  error: string;
+}
 
-import auth from '@react-native-firebase/auth';
-
+// Form validation schema
 const userDataFormSchema = z.object({
   email: z
     .string()
@@ -43,36 +54,15 @@ const userDataFormSchema = z.object({
     .max(20, { message: 'Máximo 20 caracteres para senha' }),
 });
 
-// type SendUserFormData = z.infer<typeof userDataFormSchema>;
-
 export function SignIn(): React.JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
 
   const theme = useTheme();
 
-  // const {
-  //   control,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<SendUserFormData>({
-  //   resolver: zodResolver(userDataFormSchema),
-  // });
-
-  // const onInvalid = (errors) => {
-  //   console.error('onINvalid', errors);
-  // };
-
-  // const onSubmit: SubmitHandler<SendUserFormData> = (data: SendUserFormData) => {
-  //   Alert.alert('IK AHJSDFUIOASHDOPIU');
-  //   console.log(errors);
-  //   console.log('onSubmit called');
-  //   console.log('Submit data:', data);
-  // };
-
-  function validateUserData() {
+  function validateUserData(): ValidateUserProps {
     try {
       const data = { email, password };
       userDataFormSchema.parse(data);
@@ -86,15 +76,15 @@ export function SignIn(): React.JSX.Element {
     }
   }
 
-  function handleSignIn() {
+  function handleSignIn(): void {
     const { isValid } = validateUserData();
-    
+
     if (isValid) {
       setIsLoading(true);
       auth()
         .signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          console.log(userCredential);
+          // console.log(userCredential);
         })
         .catch((error) => {
           console.log(error);
@@ -108,7 +98,7 @@ export function SignIn(): React.JSX.Element {
     }
   }
 
-  function handleRegister() {
+  function handleRegister(): void {
     const { isValid } = validateUserData();
 
     if (isValid) {
@@ -116,8 +106,7 @@ export function SignIn(): React.JSX.Element {
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then((userRecord) => {
-          console.log(userRecord.user.uid);
-          // Alert.alert('Conta', 'Cadastrado com sucesso!');
+          // console.log(userRecord.user.uid);
         })
         .catch((error) => {
           console.log(error);
@@ -130,23 +119,6 @@ export function SignIn(): React.JSX.Element {
         });
     }
   }
-
-  // function handleDeleteAccount() {
-  //   const { isValid } = validateUserData();
-  //   if (isValid) {
-  //     let user = auth().currentUser;
-
-  //     if (user) {
-  //       user
-  //         .delete()
-  //         .then(() => console.log("User deleted"))
-  //         .catch((error) => console.log(error));
-  //         console.log('delete', email, password);
-  //     }
-  //   }
-  // }
-
-  
 
   return (
     <KeyboardAwareScrollView
@@ -177,10 +149,12 @@ export function SignIn(): React.JSX.Element {
               }}
             />
 
-            <PasswordInput 
-              placeholder="Senha" 
-              onChangeText={setPassword} 
-              value={password} 
+            <PasswordInput
+              placeholder="Senha"
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={setPassword}
+              value={password}
               onSubmitEditing={() => {
                 Keyboard.dismiss();
               }}
@@ -190,36 +164,20 @@ export function SignIn(): React.JSX.Element {
           <ErrorMessageContainer>
             <ErrorMessage>{formError}</ErrorMessage>
           </ErrorMessageContainer>
-            {
-              isLoading &&
-              <ActivityIndicator 
-                color={theme.colors.background_details}
-                size="small"
-              /> 
-            }
+          {isLoading && <ActivityIndicator color={theme.colors.background_details} size="small" />}
 
           <FormButtonContainer>
-            <Button title="Login" enabled={!isLoading} loading={isLoading} onPress={handleSignIn}  />
+            <Button title="Login" enabled={!isLoading} loading={isLoading} onPress={handleSignIn} />
 
             <Button
               title="Cadastrar"
               color={theme.colors.background_details}
               enabled={!isLoading}
               loading={isLoading}
-              onPress={handleRegister}              
+              onPress={handleRegister}
             />
           </FormButtonContainer>
         </MainContent>
-        {/* <DeleteAccountButtonContainer>
-          <Button
-            title="Excluir cadastro"
-            color={theme.colors.warning_light}
-            removeType
-            enabled={true}
-            loading={false}
-            onPress={handleDeleteAccount}
-          />
-        </DeleteAccountButtonContainer> */}
       </Container>
     </KeyboardAwareScrollView>
   );
