@@ -189,6 +189,7 @@ export function SignIn(): React.JSX.Element {
 
           <ErrorMessageContainer>
             <ErrorMessage>{formError}</ErrorMessage>
+          </ErrorMessageContainer>
             {
               isLoading &&
               <ActivityIndicator 
@@ -196,7 +197,6 @@ export function SignIn(): React.JSX.Element {
                 size="small"
               /> 
             }
-          </ErrorMessageContainer>
 
           <FormButtonContainer>
             <Button title="Login" enabled={!isLoading} loading={isLoading} onPress={handleSignIn}  />
