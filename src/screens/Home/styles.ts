@@ -1,5 +1,6 @@
 // Imports for layout
 import styled from 'styled-components/native';
+import theme from '../../styles/theme';
 
 // Imports for responsive design adjustments
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -100,6 +101,14 @@ export const TasksListContainer = styled.View`
   height: ${Dimensions.get('window').height - 360}px;
   padding-top: 16px;
   padding-bottom: ${getBottomSpace() + 2}px;
+`;
+
+export const LoadingTasksIndicator = styled.ActivityIndicator.attrs({
+  size: 'large',
+  color: `${theme.colors.text_light}`,
+})`
+  align-self: 'center';
+  margin-top: 30px;
 `;
 
 export const EmptyListContainer = styled.View`

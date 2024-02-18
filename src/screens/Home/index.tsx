@@ -34,6 +34,7 @@ import {
   EmptyListMainMessage,
   EmptyListSecondaryMessage,
   Header,
+  LoadingTasksIndicator,
   LogoContainer,
   LogoutButtonContainer,
   SubTitle,
@@ -46,7 +47,7 @@ import {
 } from './styles';
 
 export function Home(): React.JSX.Element {
-  const { tasks, setStorageKey } = useTaskContext();
+  const { tasks, setStorageKey, isLoadingTasks } = useTaskContext();
 
   function renderTasks({ item }): React.JSX.Element {
     return <TaskItem {...item} />;
@@ -96,7 +97,9 @@ export function Home(): React.JSX.Element {
             </CounterContainer>
           </TaskCountersContainer>
 
-          {tasks.length > 0 ? (
+          {isLoadingTasks && <LoadingTasksIndicator />}
+
+          {tasks.length > 0 && !isLoadingTasks ? (
             <TasksListContainer>
               <FlatList
                 data={tasks}
