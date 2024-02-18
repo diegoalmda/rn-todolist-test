@@ -4,7 +4,6 @@ import { ADD_TASK, REMOVE_TASK, CHECK_TASK_AS_DONE, LOAD_STORAGE_TASKS } from '.
 const taskReducer = (state, action): Task[] => {
   switch (action.type) {
     case ADD_TASK:
-      console.log('Action Dispatched:', action.payload);
       return [...state, action.payload];    
     case REMOVE_TASK:
       return state.filter((task) => task.id !== action.payload);
