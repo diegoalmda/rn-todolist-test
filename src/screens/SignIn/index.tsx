@@ -83,8 +83,8 @@ export function SignIn(): React.JSX.Element {
       setIsLoading(true);
       auth()
         .signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // console.log(userCredential);
+        .then((userRecord) => {
+          // console.log(userRecord);
         })
         .catch((error) => {
           console.log(error);
