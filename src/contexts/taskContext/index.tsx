@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useReducer,
   useState,
+  useLayoutEffect,
 } from 'react';
 
 // External libs imports
@@ -59,39 +60,47 @@ function TaskProvider({ children }: TaskProviderProps): React.JSX.Element {
   }
 
   function setStorageKey(userUid: string): void {
-    setUserStorageKey(`@todolist-test-1.0.0:${userUid}`);
+    if (userUid !== '' && userUid !== undefined && userUid !== null) {
+      setUserStorageKey(`@todolist-test-1.0.0:${userUid}`);
+    }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function loadTasksData(): Promise<void> {
-      const tasksStored = await AsyncStorage.getItem(userStorageKey);
+      try {
+        setIsLoadingTasks(true);
+        const tasksStored = await AsyncStorage.getItem(userStorageKey);
 
-      if (tasksStored) {
-        const tasksFound = JSON.parse(tasksStored) as Task[];
-        const tasksByUser = tasksFound.filter((task) => task.user === userStorageKey);
+        if (tasksStored) {
+          const tasksFound = JSON.parse(tasksStored) as Task[];
+          const tasksByUser: Task[] = tasksFound.filter((task) => task.user === userStorageKey);
 
-        dispatch(loadTasks(tasksByUser));
+          dispatch(loadTasks(tasksByUser));
+        } else {
+          dispatch(loadTasks([]));
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoadingTasks(false);
       }
-      setIsLoadingTasks(false);
     }
 
-    try {
+    if (userStorageKey !== '') {
       loadTasksData();
-    } catch (err) {
-      console.log(err);
     }
   }, [userStorageKey]);
 
   useEffect(() => {
     async function updateTasksInStorage(): Promise<void> {
-      await AsyncStorage.setItem(userStorageKey, JSON.stringify(taskState));
+      try {
+        await AsyncStorage.setItem(userStorageKey, JSON.stringify(taskState));
+      } catch (err) {
+        console.log(err);
+      }
     }
 
-    try {
-      updateTasksInStorage();
-    } catch (err) {
-      console.log(err);
-    }
+    updateTasksInStorage();
   }, [taskState]);
 
   return (
